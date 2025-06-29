@@ -1,4 +1,3 @@
-// scripts/presenter/storyPresenter.js
 import * as model from '../model/storyModel.js';
 
 let view;
@@ -10,8 +9,15 @@ function setDependencies({ viewModule }) {
 async function submitStory(formData) {
   try {
     view.showLoading(true);
+
     const result = await model.postStory(formData);
     view.showSuccess(result.message);
+
+    // Navigasi ke halaman home jika pengiriman berhasil
+    if (view.navigateToHome) {
+      view.navigateToHome();
+    }
+
   } catch (error) {
     view.showError(error.message);
   } finally {
@@ -22,9 +28,16 @@ async function submitStory(formData) {
 async function showAllStories() {
   try {
     const stories = await model.getAllStories();
-    // renderMap() tidak dibutuhkan karena sekarang di-handle oleh view
+
+    if (view.renderStoryList) {
+      view.renderStoryList(stories);
+    }
+
   } catch (err) {
     console.error('Gagal menampilkan cerita:', err.message);
+    if (view.showError) {
+      view.showError('Gagal memuat cerita.');
+    }
   }
 }
 

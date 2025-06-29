@@ -1,35 +1,32 @@
-// presenter/auth-presenter.js
 import { loginUser, registerUser, saveToken } from '../model/auth-model.js';
-import { renderLoginForm } from '../view/login-view.js';
-import { renderRegisterForm } from '../view/register-view.js';
-
+import * as loginView from '../view/login-view.js';
+import * as registerView from '../view/register-view.js';
 
 export function showLogin() {
-  renderLoginForm({
+  loginView.renderLoginForm({
     onSubmit: async ({ email, password }) => {
       try {
         const { token } = await loginUser({ email, password });
-        saveToken(token); // ✅ menggunakan model
-        alert('Login berhasil!');
-        window.location.hash = '#/home';
+        saveToken(token);
+        loginView.showSuccess('Login berhasil!');
+        loginView.navigateToHome(); // ➕
       } catch (err) {
-        alert(err.message);
+        loginView.showError(err.message);
       }
     }
   });
 }
 
 export function showRegister() {
-  renderRegisterForm({
+  registerView.renderRegisterForm({
     onSubmit: async ({ name, email, password }) => {
       try {
         await registerUser({ name, email, password });
-        alert('Registrasi berhasil! Silakan login.');
-        window.location.hash = '#/login';
+        registerView.showSuccess('Registrasi berhasil! Silakan login.');
+        registerView.navigateToLogin(); // ➕
       } catch (err) {
-        alert(err.message);
+        registerView.showError(err.message);
       }
     }
   });
 }
-z

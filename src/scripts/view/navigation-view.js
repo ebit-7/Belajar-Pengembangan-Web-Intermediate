@@ -1,19 +1,20 @@
+// view/navigation-view.js
 export function renderNavigation() {
   const nav = document.querySelector('nav');
   const token = localStorage.getItem('token');
 
   nav.innerHTML = `
     <div class="nav-container">
-      <div class="brand" tabindex="0" aria-label="My Story Homepage">My Story</div>
+      <div class="brand" tabindex="0" aria-label="Beranda">My Story</div>
       ${
         token
           ? `
             <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navList">
-              <span class="bar"></span>
-              <span class="bar"></span>
-              <span class="bar"></span>
+              <span class="bar" aria-hidden="true"></span>
+              <span class="bar" aria-hidden="true"></span>
+              <span class="bar" aria-hidden="true"></span>
             </button>
-            <ul id="navList" class="nav-list" role="menubar" aria-label="Primary navigation">
+            <ul id="navList" class="nav-list" role="menubar" aria-label="Navigasi utama">
               <li role="none"><a role="menuitem" href="#/">Home</a></li>
               <li role="none"><a role="menuitem" href="#/add">Tambah Cerita</a></li>
               <li role="none"><a role="menuitem" href="#" id="logoutLink">Logout</a></li>
@@ -24,10 +25,8 @@ export function renderNavigation() {
     </div>
   `;
 
-  // Jika belum login, gak perlu event listener
   if (!token) return;
 
-  // Logout event
   const logoutLink = document.getElementById('logoutLink');
   if (logoutLink) {
     logoutLink.addEventListener('click', (e) => {
@@ -39,7 +38,6 @@ export function renderNavigation() {
     });
   }
 
-  // Toggle hamburger menu
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const navList = document.getElementById('navList');
 
@@ -47,7 +45,7 @@ export function renderNavigation() {
 
   const toggleMenu = () => {
     const isOpen = navList.classList.toggle('show');
-    hamburgerBtn.setAttribute('aria-expanded', isOpen);
+    hamburgerBtn.setAttribute('aria-expanded', isOpen.toString());
     hamburgerBtn.classList.toggle('active', isOpen);
     document.body.classList.toggle('nav-open', isOpen);
   };
@@ -61,7 +59,6 @@ export function renderNavigation() {
     }
   });
 
-  // Tutup menu saat klik salah satu link
   navList.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       navList.classList.remove('show');

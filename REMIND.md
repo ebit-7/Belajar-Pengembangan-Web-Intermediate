@@ -1,12 +1,21 @@
 ├───public
 │   │   manifest.json
 │   │   service-worker.js
-│   │   _redirects
 │   │
 │   └───assets
-│       └───icons
-│               icon-192.png
-│               icon-512.png
+│       ├───icons
+│       │       icon-192.png
+│       │       icon-512.png
+│       │
+│       └───libs
+│           └───leaflet
+│               │   leaflet.css
+│               │   leaflet.js
+│               │
+│               └───images
+│                       marker-icon-2x.png
+│                       marker-icon.png
+│                       marker-shadow.png
 │
 └───src
     │   index.html
@@ -30,7 +39,7 @@
         │   push-notification.js
         │   router.js
         │   view-transition.js
-        │   
+        │
         ├───api
         │       auth-api.js
         │       story-api.js
@@ -56,4 +65,5 @@
                 map-view.js
                 navigation-view.js
                 register-view.js
+                saved-stories-view.js
                 storyView.js

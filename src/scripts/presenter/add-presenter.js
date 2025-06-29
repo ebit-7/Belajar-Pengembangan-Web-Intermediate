@@ -15,7 +15,7 @@ async function handleSubmit({ description, photo, lat, lon }) {
     view.showLoading(true);
     const result = await model.postStory({ description, photo, lat, lon });
     view.showSuccess(result.message);
-    location.hash = '#/home';
+    view.navigateToHome(); // ➕ tanggung jawab navigasi pindah ke View
   } catch (error) {
     view.showError(error.message || 'Terjadi kesalahan saat mengirim data');
   } finally {

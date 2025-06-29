@@ -10,6 +10,7 @@ import { applyViewTransition } from './view-transition.js';
 import * as storyModel from './model/storyModel.js';
 import * as homeView from './view/home-view.js';
 import * as addView from './view/add-view.js';
+import * as storyView from './view/storyView.js'; // ✅ Tambahkan ini
 
 let isInjected = false;
 
@@ -28,7 +29,7 @@ function injectDependencies() {
 
   storyPresenter.setDependencies({
     modelModule: storyModel,
-    viewModule: null,
+    viewModule: storyView, // ✅ FIX: inject view di sini
   });
 
   isInjected = true;
@@ -52,7 +53,7 @@ export function router() {
     case '#/':
       applyViewTransition(() => {
         homePresenter.showHomePage();
-        storyPresenter.showAllStories();
+        storyPresenter.showAllStories(); // ✅ Aman karena sudah inject view
       });
       break;
 
@@ -85,3 +86,11 @@ export function router() {
       break;
   }
 }
+
+// ✅ Tambahkan event listener untuk stop kamera saat pindah halaman
+window.addEventListener('hashchange', () => {
+  const video = document.getElementById('camera');
+  if (video && video.srcObject) {
+    video.srcObject.getTracks().forEach(track => track.stop());
+  }
+});

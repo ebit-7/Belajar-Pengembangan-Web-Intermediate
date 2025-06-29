@@ -6,16 +6,12 @@
   "background_color": "#ffffff",
   "theme_color": "#4a90e2",
   "description": "A simple story sharing PWA app",
+  "orientation": "portrait",
+  "lang": "id-ID",
+  "dir": "ltr",
+  "scope": "/",
   "icons": [
-    {
-      "src": "assets/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }

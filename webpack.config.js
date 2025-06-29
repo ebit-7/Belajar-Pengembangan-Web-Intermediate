@@ -11,48 +11,26 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader']
-      },
-      {
-        test: /\.js$/i,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              [
-                '@babel/preset-env',
-                {
-                  useBuiltIns: 'usage',
-                  corejs: 3,
-                  targets: '> 0.25%, not dead'
-                }
-              ]
-            ]
-          }
-        }
-      }
+      { test: /\.css$/i, use: ['style-loader', 'css-loader'] },
+      { test: /\.js$/i, exclude: /node_modules/, use: 'babel-loader' }
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-      inject: 'body'
-    }),
+    new HtmlWebpackPlugin({ template: './src/index.html', inject: 'body' }),
     new CopyWebpackPlugin({
       patterns: [
         { from: 'public/manifest.json', to: '' },
         { from: 'public/service-worker.js', to: '' },
-        { from: 'public/assets/icons', to: 'assets/icons' }
+        { from: 'public/assets/icons', to: 'assets/icons' },
+        { from: 'public/assets/libs', to: 'assets/libs' }
       ]
     })
   ],
   devServer: {
     static: './dist',
     open: true,
-    hot: true
+    hot: true,
+    port: 8080
   },
   mode: 'production'
 };

@@ -1,25 +1,43 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Story App</title>
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#4a90e2" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="./assets/styles.css" />
-  </head>
-  <body class="page-wrapper">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Story App</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#4a90e2" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body class="page-wrapper">
+  <header>
     <a href="#main-content" class="skip-link">Lewati ke Konten</a>
-    <header><nav></nav></header>
-    <main id="main-content" tabindex="-1"></main>
-    <footer>
-      <p>
-        &copy; 2025 Cerita Perjalanan | Dibuat oleh
-        <strong>Ebit Pangestu</strong>
-      </p>
-    </footer>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script defer="defer" src="bundle.js"></script>
-  </body>
+    <nav aria-label="Navigasi utama"></nav>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <h1>Beranda</h1>
+    <section>
+      <h2>Daftar Cerita</h2>
+      <p>Selamat datang di aplikasi berbagi cerita perjalananmu!</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Cerita Perjalan | Dibuat oleh <strong>Ebit Pangestu</strong></p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script type="module" src="/scripts/main.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(reg => console.log('✅ SW terdaftar:', reg.scope))
+          .catch(err => console.error('❌ SW gagal:', err));
+      });
+    }
+  </script>
+</body>
 </html>

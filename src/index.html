@@ -6,22 +6,36 @@
   <title>Story App</title>
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#4a90e2" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="./assets/styles.css" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <link rel="stylesheet" href="/assets/libs/leaflet/leaflet.css" />
 </head>
 <body class="page-wrapper">
-  <a href="#main-content" class="skip-link">Lewati ke Konten</a>
-
   <header>
-    <nav></nav>
+    <a href="#main-content" class="skip-link">Lewati ke Konten</a>
+    <nav aria-label="Navigasi utama"></nav>
   </header>
-
-  <main id="main-content" tabindex="-1"></main>
-
+  <main id="main-content" tabindex="-1">
+    <h1>Beranda</h1>
+    <section>
+      <h2>Daftar Cerita</h2>
+      <p>Selamat datang di aplikasi berbagi cerita perjalananmu!</p>
+    </section>
+    <div id="homeMap" style="height: 400px;"></div>
+  </main>
   <footer>
     <p>&copy; 2025 Cerita Perjalanan | Dibuat oleh <strong>Ebit Pangestu</strong></p>
   </footer>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="/assets/libs/leaflet/leaflet.js"></script>
+  <script type="module" src="/scripts/main.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(reg => console.log('✅ SW terdaftar:', reg.scope))
+          .catch(err => console.error('❌ SW gagal:', err));
+      });
+    }
+  </script>
 </body>
 </html>

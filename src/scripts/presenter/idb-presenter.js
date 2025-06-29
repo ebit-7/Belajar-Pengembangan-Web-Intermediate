@@ -1,18 +1,13 @@
+// src/scripts/presenter/idb-presenter.js
 import { idbStory } from '../model/idb.js';
-import { createStoryElement } from '../view/storyView.js';
-
-const savedContainer = document.getElementById('saved-stories');
+import * as savedStoriesView from '../view/saved-stories-view.js';
 
 export async function showSavedStories() {
   const stories = await idbStory.getAll();
-  if (!stories.length) {
-    savedContainer.innerHTML = '<p>No saved stories.</p>';
-    return;
-  }
+  savedStoriesView.renderSavedStories(stories, handleDeleteStory);
+}
 
-  savedContainer.innerHTML = '';
-  stories.forEach((story) => {
-    const el = createStoryElement(story);
-    savedContainer.appendChild(el);
-  });
+async function handleDeleteStory(id) {
+  await idbStory.delete(id);
+  showSavedStories(); // refresh view setelah delete
 }

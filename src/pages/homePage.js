@@ -1,12 +1,19 @@
-import homePresenter from '../presenter/home-presenter.js';
-import * as storyModel from '../model/storyModel.js';
-import * as homeView from '../view/home-view.js';
+// src/pages/homePage.js
+import { showSavedStories } from '../scripts/presenter/idb-presenter.js';
 
-homePresenter.setDependencies({
-  modelModule: storyModel,
-  viewModule: homeView,
-});
+/**
+ * Render halaman home yang menampilkan cerita tersimpan dari IndexedDB
+ */
+export function renderHomePage() {
+  const main = document.getElementById('main-content');
+  if (!main) return;
 
-export default function renderHomePage() {
-  homePresenter.showHomePage();
+  main.innerHTML = `
+    <section>
+      <h2 tabindex="0">Cerita Tersimpan</h2>
+      <div id="saved-stories" aria-live="polite"></div>
+    </section>
+  `;
+
+  showSavedStories(); // 🔁 Tampilkan cerita dari IndexedDB
 }

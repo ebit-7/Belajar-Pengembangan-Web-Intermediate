@@ -1,5 +1,21 @@
+// Navigasi ke halaman login
+export function navigateToLogin() {
+  window.location.hash = '#/login';
+}
+
+// Tampilkan notifikasi sukses
+export function showSuccess(message) {
+  alert(`✅ ${message}`);
+}
+
+// Tampilkan notifikasi error
+export function showError(message) {
+  alert(`❌ ${message}`);
+}
+
+// Render form registrasi
 export function renderRegisterForm({ onSubmit }) {
-  const container = document.querySelector('main'); // ganti dari #app ke <main>
+  const container = document.querySelector('main');
 
   container.innerHTML = `
     <form id="register-form">
@@ -11,12 +27,17 @@ export function renderRegisterForm({ onSubmit }) {
     </form>
   `;
 
-  document.getElementById('register-form').addEventListener('submit', e => {
+  document.getElementById('register-form').addEventListener('submit', (e) => {
     e.preventDefault();
 
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
+
+    if (!name || !email || !password) {
+      showError("Semua field wajib diisi.");
+      return;
+    }
 
     onSubmit({ name, email, password });
   });
