@@ -4,7 +4,7 @@ import { openDB } from 'idb';
 const DB_NAME = 'story-app-db';
 const STORE_NAME = 'stories';
 
-export const dbPromise = openDB(DB_NAME, 1, {
+const dbPromise = openDB(DB_NAME, 1, {
   upgrade(db) {
     if (!db.objectStoreNames.contains(STORE_NAME)) {
       db.createObjectStore(STORE_NAME, { keyPath: 'id' });
@@ -14,9 +14,7 @@ export const dbPromise = openDB(DB_NAME, 1, {
 
 export const idbStory = {
   async put(story) {
-    if (!story.id) {
-      throw new Error('Story harus memiliki properti id yang unik');
-    }
+    if (!story.id) throw new Error('Story harus memiliki ID.');
     const db = await dbPromise;
     return db.put(STORE_NAME, story);
   },
@@ -29,5 +27,10 @@ export const idbStory = {
   async delete(id) {
     const db = await dbPromise;
     return db.delete(STORE_NAME, id);
+  },
+
+  async get(id) {
+    const db = await dbPromise;
+    return db.get(STORE_NAME, id);
   }
 };
