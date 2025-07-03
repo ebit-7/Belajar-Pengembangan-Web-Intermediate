@@ -1,13 +1,13 @@
 // src/scripts/presenter/idb-presenter.js
-import { idbStory } from '../model/idb.js';
-import * as savedStoriesView from '../view/saved-stories-view.js';
+import { idbStory } from '../idb.js';
+import { renderSavedStories } from '../view/saved-stories-view.js'; // ⬅️ destructure langsung
 
 export async function showSavedStories() {
   const stories = await idbStory.getAll();
-  savedStoriesView.renderSavedStories(stories, handleDeleteStory);
+  renderSavedStories(stories, handleDeleteStory); // ⬅️ tidak perlu .render
 }
 
 async function handleDeleteStory(id) {
   await idbStory.delete(id);
-  showSavedStories(); // refresh view setelah delete
+  showSavedStories(); // refresh tampilan
 }

@@ -1,4 +1,4 @@
-// scripts/router.js
+// ✅ FILE: src/scripts/router.js
 
 import homePresenter from './presenter/home-presenter.js';
 import addPresenter from './presenter/add-presenter.js';
@@ -20,9 +20,7 @@ import * as savedStoriesView from './view/saved-stories-view.js';
 
 let isInjected = false;
 
-/**
- * Inject dependencies only once.
- */
+// ✅ Inject only once
 function injectDependencies() {
   if (isInjected) return;
 
@@ -34,44 +32,42 @@ function injectDependencies() {
   isInjected = true;
 }
 
-/**
- * Main router function to handle view rendering based on URL hash.
- */
+// ✅ Main router function
 export function router() {
   const token = localStorage.getItem('token');
   const hash = window.location.hash || '#/home';
   const main = document.querySelector('main');
-
   if (!main) return;
 
-  // Always update navigation bar
-  renderNavigation();
+  renderNavigation(); // Always render nav
 
-  // Redirect to login if not authenticated and not on login/register page
+  // Redirect if not logged in
   if (!token && hash !== '#/login' && hash !== '#/register') {
     window.location.hash = '#/login';
     return;
   }
 
-  // Inject presenter dependencies once
-  injectDependencies();
+  injectDependencies(); // Set up once
 
-  // Route views based on hash
   switch (hash) {
     case '#/home':
     case '#/':
       applyViewTransition(() => {
-        homePresenter.showHomePage();
-        storyPresenter.showAllStories();
+        homePresenter.showHomePage(); // ✅ Only call this
+        // ✅ Don't call storyPresenter.showAllStories() again
       });
       break;
 
     case '#/add':
-      applyViewTransition(() => addPresenter.showAddForm());
+      applyViewTransition(() => {
+        addPresenter.showAddForm();
+      });
       break;
 
     case '#saved-stories':
-      applyViewTransition(() => savedStoriesPresenter.showSavedStories());
+      applyViewTransition(() => {
+        savedStoriesPresenter.showSavedStories();
+      });
       break;
 
     case '#/login':
@@ -86,22 +82,20 @@ export function router() {
       break;
 
     case '#/register':
-      applyViewTransition(() => showRegisterPage());
+      applyViewTransition(() => {
+        showRegisterPage();
+      });
       break;
 
     default:
-      // Default fallback route to home page
       applyViewTransition(() => {
-        homePresenter.showHomePage();
-        storyPresenter.showAllStories();
+        homePresenter.showHomePage(); // Fallback ke Home
       });
       break;
   }
 }
 
-/**
- * Stop camera stream (if any) on route change.
- */
+// ✅ Stop camera stream on route change
 window.addEventListener('hashchange', () => {
   const video = document.getElementById('camera');
   if (video?.srcObject) {

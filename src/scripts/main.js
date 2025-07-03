@@ -1,3 +1,4 @@
+// ✅ FILE: src/scripts/main.js
 import '../assets/styles.css';
 import { router } from './router.js';
 import { renderNavigation } from './view/navigation-view.js';
@@ -49,10 +50,53 @@ function startStoryPolling() {
   }, 60000);
 }
 
+function initAddToHomeScreen() {
+  if (localStorage.getItem('a2hs-installed') === 'true') return;
+
+  let deferredPrompt;
+  const installBtn = document.createElement('button');
+  installBtn.textContent = 'Install Aplikasi';
+  installBtn.style.display = 'none';
+  installBtn.style.position = 'fixed';
+  installBtn.style.bottom = '20px';
+  installBtn.style.right = '20px';
+  installBtn.style.zIndex = '1000';
+  installBtn.style.padding = '10px 16px';
+  installBtn.style.backgroundColor = '#4a90e2';
+  installBtn.style.color = '#fff';
+  installBtn.style.border = 'none';
+  installBtn.style.borderRadius = '8px';
+  installBtn.style.cursor = 'pointer';
+  document.body.appendChild(installBtn);
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = 'block';
+  });
+
+  installBtn.addEventListener('click', () => {
+    installBtn.style.display = 'none';
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('✅ User accepted A2HS prompt');
+          localStorage.setItem('a2hs-installed', 'true');
+        } else {
+          console.log('❌ User dismissed A2HS prompt');
+        }
+        deferredPrompt = null;
+      });
+    }
+  });
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   init();
   initSkipLink();
   startStoryPolling();
+  initAddToHomeScreen();
 });
 
 window.addEventListener('load', () => {

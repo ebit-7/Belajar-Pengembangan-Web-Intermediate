@@ -1,45 +1,25 @@
-import { idbStory } from '../idb.js';
-
-function renderStories(stories) {
+export function renderStoryList(stories, onSave) {
   const container = document.getElementById('stories-container');
   if (!container) return;
 
   container.innerHTML = '';
 
   stories.forEach(story => {
-    // Pastikan setiap story memiliki id unik sebelum render
-    if (!story.id) {
-      console.warn('Story tanpa id ditemukan, abaikan:', story);
-      return;
-    }
+    if (!story.id) return;
 
     const div = document.createElement('div');
-    div.classList.add('story-item');
-
+    div.className = 'story-item';
     div.innerHTML = `
       <p>${story.description || 'No description'}</p>
       <small>${new Date(story.createdAt || Date.now()).toLocaleString()}</small>
-      <button class="delete-btn" data-id="${story.id}" aria-label="Hapus cerita ini">Hapus</button>
+      <button class="save-btn" data-id="${story.id}">Simpan Story</button>
     `;
+
+    const saveBtn = div.querySelector('.save-btn');
+    if (saveBtn && typeof onSave === 'function') {
+      saveBtn.addEventListener('click', () => onSave(story));
+    }
 
     container.appendChild(div);
   });
-
-  // Tambahkan event listener hapus ke semua tombol delete
-  container.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', async (e) => {
-      const id = e.target.dataset.id;
-      if (!id) return;
-
-      try {
-        await idbStory.delete(id);
-        const cachedStories = await idbStory.getAll();
-        renderStories(cachedStories);
-      } catch (error) {
-        console.error('Gagal menghapus story dari IndexedDB:', error);
-      }
-    });
-  });
 }
-
-export default { renderStories };

@@ -1,4 +1,5 @@
 import * as model from '../model/storyModel.js';
+import { idbStory } from '../idb.js';
 
 let view;
 
@@ -9,15 +10,12 @@ function setDependencies({ viewModule }) {
 async function submitStory(formData) {
   try {
     view.showLoading(true);
-
     const result = await model.postStory(formData);
     view.showSuccess(result.message);
 
-    // Navigasi ke halaman home jika pengiriman berhasil
     if (view.navigateToHome) {
       view.navigateToHome();
     }
-
   } catch (error) {
     view.showError(error.message);
   } finally {
@@ -30,7 +28,7 @@ async function showAllStories() {
     const stories = await model.getAllStories();
 
     if (view.renderStoryList) {
-      view.renderStoryList(stories);
+      view.renderStoryList(stories, handleSaveStory);
     }
 
   } catch (err) {
@@ -38,6 +36,15 @@ async function showAllStories() {
     if (view.showError) {
       view.showError('Gagal memuat cerita.');
     }
+  }
+}
+
+async function handleSaveStory(story) {
+  try {
+    await idbStory.put(story);
+    alert(`Cerita "${story.name}" berhasil disimpan!`);
+  } catch (err) {
+    console.error('Gagal menyimpan story:', err.message);
   }
 }
 

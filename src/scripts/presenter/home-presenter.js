@@ -1,6 +1,4 @@
-import { idbStory } from '../idb.js';
-import { getStories } from '../api/story-api.js';
-
+// ✅ FILE: src/scripts/presenter/home-presenter.js
 let model, view;
 
 function setDependencies({ modelModule, viewModule }) {
@@ -10,13 +8,10 @@ function setDependencies({ modelModule, viewModule }) {
 
 async function showHomePage() {
   try {
-    const stories = await getStories();
-    for (const story of stories) {
-      await idbStory.put(story);
-    }
-    view.renderHome(stories);
+    const stories = await model.getAllStories(); // Gunakan dari model
+    view.renderHome(stories); // ✅ pastikan ini ada di view
   } catch (error) {
-    const cached = await idbStory.getAll();
+    const cached = await model.getSavedStories();
     if (cached.length > 0) {
       view.renderHome(cached);
     } else {

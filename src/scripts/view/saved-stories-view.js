@@ -1,12 +1,18 @@
-export function render(stories, onDelete) {
+export function renderSavedStories(stories, onDelete) {
   const main = document.querySelector('main');
-  main.innerHTML = '<h2>Cerita Tersimpan</h2><div class="story-grid" id="saved-stories"></div>';
+  main.innerHTML = `
+    <h2>Cerita Tersimpan</h2>
+    <div class="story-grid" id="saved-stories"></div>
+  `;
 
   const container = document.getElementById('saved-stories');
   if (!stories.length) {
     container.innerHTML = '<p>Tidak ada cerita tersimpan.</p>';
     return;
   }
+
+  // Sort stories berdasarkan createdAt terbaru dulu
+  stories.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   stories.forEach((story) => {
     const card = document.createElement('div');
@@ -18,14 +24,16 @@ export function render(stories, onDelete) {
         <h3>${story.name || 'Tanpa Nama'}</h3>
         <p>${story.description || 'Tanpa Deskripsi'}</p>
         <small>${new Date(story.createdAt || Date.now()).toLocaleString()}</small>
-        <button class="delete-btn" data-id="${story.id}" aria-label="Hapus cerita ${story.name || ''}">Hapus</button>
+        <button class="delete-btn" data-id="${story.id}" aria-label="Hapus cerita ${story.name || ''}">
+          🗑️ Hapus
+        </button>
       </div>
     `;
 
     const deleteBtn = card.querySelector('.delete-btn');
     deleteBtn.addEventListener('click', () => {
       if (confirm('Yakin ingin menghapus cerita ini?')) {
-        onDelete(story.id); // Ini akan trigger refresh
+        onDelete(story.id);
       }
     });
 

@@ -1,4 +1,3 @@
-// src/scripts/idb.js
 import { openDB } from 'idb';
 
 const DB_NAME = 'story-app-db';

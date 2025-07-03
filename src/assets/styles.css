@@ -290,53 +290,49 @@ nav .brand:hover {
 /* =====================
    Story Grid & Cards
 ====================== */
-.story-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
 .story-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  background: #ffffff;
+  border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e0e0e0;
 }
 
 .story-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
 
 .story-card img {
   width: 100%;
   height: 180px;
   object-fit: cover;
-  border-bottom: 1px solid #eee;
+  display: block;
 }
 
 .story-info {
-  padding: 1rem;
-  flex-grow: 1;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.story-info h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1.2rem;
+.story-title {
+  margin: 0;
+  font-size: 1.3rem;
   color: #2c3e50;
+  font-weight: 700;
 }
 
-.story-info p {
+.story-description {
   font-size: 1rem;
   color: #555;
-  margin: 0 0 0.75rem;
+  max-height: 4.5em;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -344,11 +340,18 @@ nav .brand:hover {
   -webkit-box-orient: vertical;
 }
 
-.story-info small {
+.story-date {
   font-size: 0.85rem;
   color: #888;
-  text-align: right;
 }
+
+.story-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 
 
 
@@ -431,7 +434,115 @@ nav .brand:hover {
 
 
 
+/* ______________ */
+.story-info {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
+.save-btn {
+  background-color: #007bff;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,123,255,0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.save-btn {
+  background-color: #007bff;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,123,255,0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.save-btn:disabled {
+  background-color: #28a745; /* hijau terang */
+  color: #fff;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+
+
+
+
+
+
+
+
+.story-info {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  text-align: center;  /* Text center */
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.4rem 0.85rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(231, 76, 60, 0.5);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  user-select: none;
+
+  /* PENTING: */
+  margin-left: auto;
+  margin-right: auto;
+  /* atau bisa juga: */
+  /* align-self: center; */
+}
+
+
+.delete-btn:hover {
+  background-color: #c0392b;
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.7);
+}
+
+.delete-btn:active {
+  background-color: #992d22;
+  box-shadow: 0 2px 5px rgba(153, 45, 34, 0.8);
+}
+
+
+/* ______________ */
 
 
 

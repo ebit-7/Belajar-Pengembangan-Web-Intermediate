@@ -4,8 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Story App</title>
-  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Favicon dan Icon -->
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/icon-192x192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/icons/icon-512x512.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/assets/icons/icon-512x512.png" />
   <meta name="theme-color" content="#4a90e2" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <!-- Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Styles -->
   <link rel="stylesheet" href="/assets/styles.css" />
   <link rel="stylesheet" href="/assets/libs/leaflet/leaflet.css" />
 </head>
@@ -14,6 +25,7 @@
     <a href="#main-content" class="skip-link">Lewati ke Konten</a>
     <nav aria-label="Navigasi utama"></nav>
   </header>
+
   <main id="main-content" tabindex="-1">
     <h1>Beranda</h1>
     <section>
@@ -22,6 +34,7 @@
     </section>
     <div id="homeMap" style="height: 400px;"></div>
   </main>
+
   <footer>
     <p>&copy; 2025 Cerita Perjalanan | Dibuat oleh <strong>Ebit Pangestu</strong></p>
   </footer>
