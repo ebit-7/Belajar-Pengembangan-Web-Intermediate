@@ -1,1 +1,1 @@
-https://belajar-pengembangan-web-intermedia-nine.vercel.app/#/login
+https://belajar-pengembangan-web-intermedia-ruby.vercel.app/#/login
