@@ -5,8 +5,8 @@ const STATIC_ASSETS = [
   '/bundle.js',
   '/manifest.json',
   '/assets/styles.css',
-  '/assets/icons/icon-192.png',
-  '/assets/icons/icon-512.png',
+  '/assets/icons/icon-192x192.png',
+  '/assets/icons/icon-512x512.png',
   '/assets/libs/leaflet/leaflet.css',
   '/assets/libs/leaflet/leaflet.js',
 ];

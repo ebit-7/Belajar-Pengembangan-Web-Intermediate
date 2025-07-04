@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 https://belajar-pengembangan-web-intermedia-ruby.vercel.app/#/login
+=======
+https://belajar-pengembangan-web-intermedia-ruby.vercel.app/#/login
+>>>>>>> 60e9194 (perbarui)

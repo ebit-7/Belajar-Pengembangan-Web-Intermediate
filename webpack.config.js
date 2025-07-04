@@ -21,6 +21,7 @@ module.exports = {
       patterns: [
         { from: 'public/manifest.json', to: '' },
         { from: 'public/service-worker.js', to: '' },
+        { from: 'src/assets/styles.css', to: 'assets/' },
         { from: 'public/assets/icons', to: 'assets/icons' },
         { from: 'public/assets/libs', to: 'assets/libs' }
       ]

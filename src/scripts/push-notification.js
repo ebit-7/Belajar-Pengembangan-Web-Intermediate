@@ -29,13 +29,19 @@ export async function initPush() {
       applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
     });
 
-    await fetch('https://story-api.dicoding.dev/v1/subscribe', {
+    await fetch('https://story-api.dicoding.dev/v1/notifications/subscribe', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`, // sesuaikan jika backend butuh token
       },
-      body: JSON.stringify(subscription),
+      body: JSON.stringify({
+
+        endpoint: subscriptionJSON.endpoint,
+
+        keys: subscriptionJSON.keys
+
+      }),
     });
 
     console.log('✅ Berhasil subscribe Push Notification!');
