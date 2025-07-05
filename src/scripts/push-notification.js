@@ -1,5 +1,3 @@
-// scripts/push-notification.js
-
 // 🔑 Ganti dengan VAPID PUBLIC KEY dari backend kamu
 const VAPID_PUBLIC_KEY = 'BCCs2eonMI-6H2ctvFaWg-UYdDv387Vno_bzUzALpB442r2lCnsHmtrx8biyPi_E-1fSGABK_Qs_GlvPoJJqxbk';
 
@@ -29,18 +27,19 @@ export async function initPush() {
       applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
     });
 
+    // ✅ Perbaikan: inisialisasi subscriptionJSON
+    const subscriptionJSON = subscription.toJSON();
+
+    // ✅ Kirim ke backend
     await fetch('https://story-api.dicoding.dev/v1/notifications/subscribe', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`, // sesuaikan jika backend butuh token
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({
-
         endpoint: subscriptionJSON.endpoint,
-
-        keys: subscriptionJSON.keys
-
+        keys: subscriptionJSON.keys,
       }),
     });
 
@@ -57,10 +56,7 @@ export async function initPush() {
  */
 function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding)
-    .replace(/-/g, '+')
-    .replace(/_/g, '/');
-
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
   const rawData = atob(base64);
   return Uint8Array.from([...rawData].map(char => char.charCodeAt(0)));
 }
@@ -83,8 +79,7 @@ export function requestPermission() {
 }
 
 /**
- * ✅ Fungsi ekspor untuk menampilkan notifikasi secara manual
- * Diperlukan saat polling data baru
+ * Fungsi ekspor untuk menampilkan notifikasi secara manual
  * @param {string} message - isi notifikasi
  */
 export function showNotification(message) {

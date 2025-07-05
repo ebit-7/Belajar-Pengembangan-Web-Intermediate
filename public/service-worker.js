@@ -12,14 +12,20 @@ const STATIC_ASSETS = [
 ];
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS)));
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
+  );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.map(key => key !== CACHE_NAME && caches.delete(key)))
+      Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) return caches.delete(key);
+        })
+      )
     )
   );
   self.clients.claim();
@@ -30,7 +36,6 @@ self.addEventListener('fetch', event => {
 
   const url = new URL(event.request.url);
 
-  // Support hash routes: always serve index.html for any hash
   if (url.origin === location.origin && url.hash && url.pathname === '/') {
     event.respondWith(caches.match('/index.html'));
     return;
@@ -41,8 +46,10 @@ self.addEventListener('fetch', event => {
       if (cached) return cached;
       return fetch(event.request)
         .then(resp => {
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, resp.clone()));
-          return resp;
+          return caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, resp.clone());
+            return resp;
+          });
         })
         .catch(() => {
           if (event.request.headers.get('accept')?.includes('text/html')) {
@@ -53,21 +60,35 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Push notification
+// ✅ Perbaikan bagian push event
 self.addEventListener('push', event => {
   let data = {
     title: 'Cerita Baru!',
     body: 'Cek cerita terbaru di Story App!',
     icon: '/assets/icons/icon-192.png',
   };
+
   if (event.data) {
-    try { data = event.data.json(); }
-    catch { data.body = event.data.text(); }
+    try {
+      data = event.data.json();
+    } catch {
+      data.body = event.data.text();
+    }
   }
-  const options = { body: data.body, icon: data.icon, badge: '/assets/icons/icon-192.png', data: { url: '/' } };
-  event.waitUntil(self.registration.showNotification(data.title || 'Notifikasi', options));
+
+  const options = {
+    body: data.body || 'Ada notifikasi baru!',
+    icon: data.icon || '/assets/icons/icon-192.png',
+    badge: '/assets/icons/icon-192x192.png',
+    data: { url: '/' },
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(data.title || 'Notifikasi', options)
+  );
 });
 
+// ✅ Tangani klik notifikasi
 self.addEventListener('notificationclick', event => {
   event.notification.close();
   event.waitUntil(
