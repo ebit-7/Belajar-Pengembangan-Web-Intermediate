@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-https://belajar-pengembangan-web-intermedia-gamma.vercel.app/#/login
+https://belajar-pengembangan-web-intermedia-beta.vercel.app/#/login
 =======
-https://belajar-pengembangan-web-intermedia-gamma.vercel.app/#/login
+https://belajar-pengembangan-web-intermedia-beta.vercel.app/#/login
 >>>>>>> 2e3d1fc (Normalize line endings)
